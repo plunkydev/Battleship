@@ -101,5 +101,18 @@ describe('Game Board Tests', () => {
             expect(board.ships[1].position).toEqual([[2, 2], [3, 2], [4, 2], [5, 2], [6, 2]])
             expect(board.ships[1].ship.length).toBe(5)
         })
+        test('should not allow overlapping ships', () => {
+            const cruiser = { ship: new Ship(3), position: [1, 1], direction: 'horizontal' };
+            const destroyer = { ship: new Ship(2), position: [1, 2], direction: 'vertical' };
+            board.placeShip(cruiser);
+            expect(board.placeShip(destroyer)).toBe(false);
+        });
+        test('should allow placing non-overlapping ships', () => {
+            const cruiser = { ship: new Ship(3), position: [1, 1], direction: 'horizontal' };
+            const destroyer = { ship: new Ship(2), position: [2, 2], direction: 'vertical' };
+            board.placeShip(cruiser);
+            expect(board.placeShip(destroyer)).toBe(true);
+        });
+
     });
 });

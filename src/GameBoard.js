@@ -9,7 +9,7 @@ class GameBoard {
     receiveAttack(coodinate) {
         if (this.misses.some((miss) => miss[0] === coodinate[0] && miss[1] === coodinate[1])) {
             return
-        } 
+        }
         for (let i = 0; i < this.ships.length; i++) {
             const ship = this.ships[i];
             if (!ship.ship.isSunk()) {
@@ -26,26 +26,37 @@ class GameBoard {
         }
         this.misses.push(coodinate);
     }
+    #generatePositions(position, direction, length) {
+        const [startX, startY] = position;
+        const positions = [];
+
+        for (let i = 0; i < length; i++) {
+            const x = direction === 'vertical' ? startX + i : startX;
+            const y = direction === 'horizontal' ? startY + i : startY;
+            positions.push([x, y]);
+        }
+
+        return positions;
+    }
+    #checkCollision(newPositions) {
+    for (const ship of this.ships) {
+        for (const pos of ship.position) {
+            if (newPositions.some(([x, y]) => pos[0] === x && pos[1] === y)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
 
     placeShip(place) {
-        const positionConfig = (position, direction, length) => {
-            const positions = [];
-            const [startX, startY] = position;
-            for (let i = 0; i < length; i++) {
-                if (direction === 'vertical') {
-                    positions.push([startX + i, startY]);
-                } else {
-                    positions.push([startX, startY + i]);
-                }
-            }
-            return positions;
+        const position = this.#generatePositions(place.position, place.direction, place.ship.length);
+        if (this.#checkCollision(position)) {    
+            return false;
         }
-        const ship = {
-            ship: place.ship,
-            position: positionConfig(place.position, place.direction, place.ship.length),
-            direction: place.direction,
-        }
-        this.ships.push(ship);
+        this.ships.push({ ship: place.ship, position, direction: place.direction });
+        return true;
     }
 }
 export { GameBoard }
