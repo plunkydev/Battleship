@@ -113,6 +113,14 @@ describe('Game Board Tests', () => {
             board.placeShip(cruiser);
             expect(board.placeShip(destroyer)).toBe(true);
         });
+        test('should not allow ships placed outside the board boundaries', () => {
+            const cruiser = { ship: new Ship(3), position: [0, 9], direction: 'horizontal' };
+            expect(board.placeShip(cruiser)).toBe(false);
+
+            const carrier = { ship: new Ship(5), position: [8, 0], direction: 'vertical' };
+            expect(board.placeShip(carrier)).toBe(false);
+        });
+
 
     });
 });

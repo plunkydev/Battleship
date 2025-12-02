@@ -26,18 +26,24 @@ class GameBoard {
         }
         this.misses.push(coodinate);
     }
+    
     #generatePositions(position, direction, length) {
         const [startX, startY] = position;
         const positions = [];
+        const boardLimit = 9;
 
         for (let i = 0; i < length; i++) {
             const x = direction === 'vertical' ? startX + i : startX;
             const y = direction === 'horizontal' ? startY + i : startY;
+            if (x > boardLimit || y > boardLimit || x < 0 || y < 0) {
+                return null;
+            }
             positions.push([x, y]);
         }
 
         return positions;
     }
+
     #checkCollision(newPositions) {
     for (const ship of this.ships) {
         for (const pos of ship.position) {
@@ -52,11 +58,14 @@ class GameBoard {
 
     placeShip(place) {
         const position = this.#generatePositions(place.position, place.direction, place.ship.length);
-        if (this.#checkCollision(position)) {    
+        if (!position) {
             return false;
+        } else if (this.#checkCollision(position)) {
+            return false;
+        } else {
+            this.ships.push({ ship: place.ship, position, direction: place.direction });
+            return true;
         }
-        this.ships.push({ ship: place.ship, position, direction: place.direction });
-        return true;
     }
 }
 export { GameBoard }
