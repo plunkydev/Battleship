@@ -65,8 +65,8 @@ describe('BoardUI test', () => {
     (y opcionalmente, un botón para reiniciar). */
     test("should display game over message with winner", () => {
         board.displayGameOver("human");
-        expect(document.getElementById('game-over-message').textContent).toBe("¡El jugador gana!");
+        expect(document.getElementById('game-over-message').textContent).toBe("¡human wins!");
         board.displayGameOver("computer");
-        expect(document.getElementById('game-over-message').textContent).toBe("¡La computadora gana!");
+        expect(document.getElementById('game-over-message').textContent).toBe("¡computer wins!");
     });
 });
