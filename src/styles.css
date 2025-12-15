@@ -13,7 +13,23 @@ body {
     justify-content: center;
     height: 100vh;
 }
-h1 {
-    margin-bottom: 20px;
-    color: #007acc;
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 2px;
+    border: 1px solid #007acc;
+    background-color: #e6f2ff;
+    padding: 2px;
+}
+.cell {
+    width: 40px;
+    height: 40px;
+    background-color: #e0f7ff;
+    border: 1px solid #007acc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }

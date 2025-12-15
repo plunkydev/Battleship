@@ -1,2 +1,5 @@
 import './styles.css';
-console.log("Hello, Battleship!");
+import { BoardUI } from "./BoardUI.js";
+
+const board = new BoardUI();
+document.body.innerHTML = board.render()
