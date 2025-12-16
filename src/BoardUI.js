@@ -1,15 +1,21 @@
 export class BoardUI {
-    constructor() {
+    constructor(id) {
         this.boardContainer = document.createElement("div");
-        this.boardContainer.id = "board";
-        document.body.appendChild(this.boardContainer);
+        this.boardContainer.id = id;
+        this.boardContainer.classList.add("board");
     }
 
     render() {
-        // Limpia el tablero si ya existe
+        // Limpiar tablero si ya existe
         this.boardContainer.innerHTML = "";
 
-        // Crea las 10x10 celdas
+        // Crear título dinámico
+        const label = document.createElement('h3');
+        label.textContent = this.boardContainer.id === 'player-board'
+            ? 'Tu tablero'
+            : 'Tablero enemigo';
+
+        // Crear las 10x10 celdas
         for (let x = 0; x < 10; x++) {
             for (let y = 0; y < 10; y++) {
                 const cell = document.createElement("div");
@@ -19,8 +25,16 @@ export class BoardUI {
                 this.boardContainer.appendChild(cell);
             }
         }
-        return this.boardContainer.outerHTML;
+
+        // Envolver el tablero con su etiqueta
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('board-wrapper');
+        wrapper.appendChild(label);
+        wrapper.appendChild(this.boardContainer);
+
+        return wrapper;
     }
+
     setAttackHandler(callback) {
         this.attackHandler = callback;
         const cells = this.boardContainer.querySelectorAll(".cell");
