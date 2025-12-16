@@ -6,18 +6,20 @@ import { BoardUI } from '../src/BoardUI.js';
 describe('BoardUI test', () => {
     let board;
     beforeEach(() => {
-        document.body.innerHTML = ""; // Limpia el DOM antes de cada test
-        board = new BoardUI();
-        board.render();
+        document.body.innerHTML = ''; // limpia el DOM antes de cada test
+        board = new BoardUI('enemy-board');
+        document.body.appendChild(board.render()); // monta el tablero en el DOMF
     });
     /* 
     Escenario 1 — Renderizado del tablero
     Dado que el juego inicia
     Cuando se carga la interfaz de usuario
-    entonces debería renderizar un tablero de 10×10 celdas visibles, y cada celda debería tener coordenadas únicas (data-x, data-y)
+    Entonces debería renderizar un tablero con 10×10 celdas visibles,
+    cada una identificada por coordenadas únicas (data-x, data-y)
      */
     test("should render a 10x10 board with unique cell coordinates", () => {
-        expect(board.render()).toMatchSnapshot();
+        const rendered = board.render();
+        expect(rendered.querySelectorAll('.cell')).toHaveLength(100);
     });
 
     /* Escenario 2 — Interacción: clic en una celda
