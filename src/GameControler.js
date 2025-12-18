@@ -7,14 +7,26 @@ export class GameController {
         this.winner = null;
     }
     playTurn(coordinates) {
+        let hit = false;
+
         if (this.currentTurn === "human") {
-            this.player1.attack(this.player2, coordinates);
+            hit = this.player1.attack(this.player2, coordinates);
             this.currentTurn = "computer";
         } else {
-            this.player2.attack(this.player1, this.player2.randomAttack(this.player1));
+            const random = this.player2.randomAttack(this.player1);
+            hit = this.player2.attack(this.player1, random);
             this.currentTurn = "human";
         }
+
+        const gameOver = this.isGameOver();
+
+        return {
+            hit,
+            currentTurn: this.currentTurn,
+            winner: gameOver ? this.winner : null,
+        };
     }
+
     isGameOver() {
         if (this.player1.board.allShipsSunk()) {
             this.winner = "computer";

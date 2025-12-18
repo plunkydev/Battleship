@@ -6,27 +6,31 @@ class GameBoard {
     allShipsSunk() {
         return this.ships.every(({ ship }) => ship.isSunk());
     }
-    receiveAttack(coodinate) {
-        if (this.misses.some((miss) => miss[0] === coodinate[0] && miss[1] === coodinate[1])) {
-            return
+    receiveAttack(coordinate) {
+        // Si ya fue atacada antes, no cuenta
+        if (this.misses.some((miss) => miss[0] === coordinate[0] && miss[1] === coordinate[1])) {
+            return false;
         }
+
         for (let i = 0; i < this.ships.length; i++) {
             const ship = this.ships[i];
             if (!ship.ship.isSunk()) {
                 for (let j = 0; j < ship.position.length; j++) {
                     const position = ship.position[j];
-                    if (position[0] === coodinate[0] && position[1] === coodinate[1]) {
+                    if (position[0] === coordinate[0] && position[1] === coordinate[1]) {
                         ship.ship.hit();
-                        return;
+                        return true; // ✅ impacto
                     }
                 }
-            } else {
-                return
             }
         }
-        this.misses.push(coodinate);
+
+        // Si llegó aquí, fue un fallo
+        this.misses.push(coordinate);
+        return false;
     }
-    
+
+
     #generatePositions(position, direction, length) {
         const [startX, startY] = position;
         const positions = [];
@@ -45,15 +49,15 @@ class GameBoard {
     }
 
     #checkCollision(newPositions) {
-    for (const ship of this.ships) {
-        for (const pos of ship.position) {
-            if (newPositions.some(([x, y]) => pos[0] === x && pos[1] === y)) {
-                return true;
+        for (const ship of this.ships) {
+            for (const pos of ship.position) {
+                if (newPositions.some(([x, y]) => pos[0] === x && pos[1] === y)) {
+                    return true;
+                }
             }
         }
+        return false;
     }
-    return false;
-}
 
 
     placeShip(place) {
