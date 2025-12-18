@@ -1,10 +1,10 @@
-import { GameControler } from '../src/GameControler';
+import { GameController } from '../src/GameControler';
 import { Ship } from '../src/Ship';
 
-describe('GameControler test', () => {
+describe('GameController test', () => {
     let game;
     beforeEach(() => {
-        game = new GameControler();
+        game = new GameController();
     });
     test("should initialize with two players and set human as current turn", () => {
         expect(game.player1.name).toBe("human");
