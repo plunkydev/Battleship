@@ -18,13 +18,16 @@ describe("Player test", () => {
         const computer = new Player("computer");
         const opponent = new Player("human");
 
-        const firstAttack = computer.randomAttack(opponent);
-        const secondAttack = computer.randomAttack(opponent);
+        computer.randomAttack(opponent);
+        computer.randomAttack(opponent);
+
+        expect(computer.attacks).toHaveLength(2);
+
+        const [firstAttack, secondAttack] = computer.attacks;
 
         expect(firstAttack).toHaveLength(2);
         expect(secondAttack).toHaveLength(2);
         expect(firstAttack).not.toEqual(secondAttack);
-        expect(computer.attacks).toContainEqual(firstAttack);
-        expect(computer.attacks).toContainEqual(secondAttack);
     });
+
 })
