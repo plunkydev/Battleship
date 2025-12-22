@@ -55,9 +55,9 @@ describe('BoardUI test', () => {
     (por ejemplo, un texto “Turno del jugador” o “Turno de la computadora”). */
     test("should display current turn indicator", () => {
         board.updateTurnIndicator("human");
-        expect(document.getElementById('turn-indicator').textContent).toBe("Turno del jugador");
+        expect(document.getElementById('indicator').textContent).toBe("Turno del jugador");
         board.updateTurnIndicator("computer");
-        expect(document.getElementById('turn-indicator').textContent).toBe("Turno de la computadora");
+        expect(document.getElementById('indicator').textContent).toBe("Turno de la computadora");
     });
     /* Escenario 5 — Fin del juego
 
@@ -67,8 +67,8 @@ describe('BoardUI test', () => {
     (y opcionalmente, un botón para reiniciar). */
     test("should display game over message with winner", () => {
         board.displayGameOver("human");
-        expect(document.getElementById('game-over-message').textContent).toBe("¡human wins!");
+        expect(document.getElementById('indicator').textContent).toBe("¡human wins!");
         board.displayGameOver("computer");
-        expect(document.getElementById('game-over-message').textContent).toBe("¡computer wins!");
+        expect(document.getElementById('indicator').textContent).toBe("¡computer wins!");
     });
 });
