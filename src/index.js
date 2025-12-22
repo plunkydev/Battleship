@@ -16,4 +16,13 @@ computerBoard.setAttackHandler((coordinates) => {
     computerBoard.updateCell(coordinates, result.hit);
     computerBoard.updateTurnIndicator(result.currentTurn);
     if (result.winner) computerBoard.displayGameOver(result.winner);
+    
+    setTimeout(() => {
+        const compResult = game.playTurn();
+        playerBoard.updateCell(compResult.coordinates || [0, 0], compResult.hit);
+        computerBoard.updateTurnIndicator(compResult.currentTurn);
+
+        if (compResult.winner) computerBoard.displayGameOver(compResult.winner);
+    }, 800);
 });
+
