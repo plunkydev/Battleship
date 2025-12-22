@@ -59,11 +59,11 @@ export class BoardUI {
     }
 
     updateTurnIndicator(currentTurn) {
-        let indicator = document.getElementById("turn-indicator");
+        let indicator = document.getElementById("indicator");
 
         if (!indicator) {
             indicator = document.createElement("div");
-            indicator.id = "turn-indicator";
+            indicator.id = "indicator";
             document.body.appendChild(indicator);
         }
 
@@ -74,17 +74,11 @@ export class BoardUI {
         }
     }
 
-    /* Escenario 5 — Fin del juego
-
-Dado que todos los barcos de un jugador están hundidos,
-cuando el juego termina,
-entonces debería mostrarse un mensaje visual indicando el ganador
-(y opcionalmente, un botón para reiniciar). */
     displayGameOver(winner) {
-        let gameOverMessage = document.getElementById("game-over-message");
+        let gameOverMessage = document.getElementById("indicator");
         if (!gameOverMessage) {
             gameOverMessage = document.createElement("div");
-            gameOverMessage.id = "game-over-message";
+            gameOverMessage.id = "indicator";
             document.body.appendChild(gameOverMessage);
         }
         let restartButton = document.getElementById("restart-button");
