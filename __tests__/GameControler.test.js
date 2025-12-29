@@ -1,10 +1,13 @@
 import { GameController } from '../src/GameControler';
+import { GameBoard } from '../src/GameBoard';
 import { Ship } from '../src/Ship';
 
 describe('GameController test', () => {
     let game;
     beforeEach(() => {
-        game = new GameController();
+        const playerBoard = new GameBoard();
+        const computerBoard = new GameBoard();
+        game = new GameController(playerBoard, computerBoard);
     });
     test("should initialize with two players and set human as current turn", () => {
         expect(game.player1.name).toBe("human");
@@ -13,15 +16,12 @@ describe('GameController test', () => {
     });
 
     test("should switch turns after a valid attack", () => {
-        game.player1.attack = jest.fn(); // simulamos ataque del humano
-        game.player2.attack = jest.fn(); // simulamos ataque del CPU
+    const result1 = game.playTurn([2, 3]); // humano ataca
+    expect(result1.currentTurn).toBe("computer");
 
-        game.playTurn([2, 3]); // humano ataca
-        expect(game.currentTurn).toBe("computer");
-
-        game.playTurn(); // CPU ataca
-        expect(game.currentTurn).toBe("human");
-    });
+    const result2 = game.playTurn(); // CPU ataca
+    expect(result2.currentTurn).toBe("human");
+});
 
     test("should declare a winner when all opponent ships are sunk", () => {
         // Agregamos barcos a ambos jugadores
