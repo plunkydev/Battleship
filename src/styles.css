@@ -99,3 +99,10 @@ h3 {
 .bottons:hover {
     background-color: #005f99;
 }
+
+.disabled-board {
+    opacity: 0.4;
+    filter: grayscale(0.6);
+    transition: opacity 0.3s ease, filter 0.3s ease;
+    cursor: not-allowed;
+}
