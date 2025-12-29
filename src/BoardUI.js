@@ -81,20 +81,17 @@ export class BoardUI {
             gameOverMessage.id = "indicator";
             document.body.appendChild(gameOverMessage);
         }
-        let restartButton = document.getElementById("restart-button");
-        if (!restartButton) {
-            restartButton = document.createElement("button");
-            restartButton.id = "restart-button";
-            restartButton.textContent = "Reiniciar";
-            document.body.appendChild(restartButton);
-        }
         gameOverMessage.textContent = "";
         gameOverMessage.textContent = `¡${winner} wins!`;
-        restartButton.style.display = "block";
-        restartButton.addEventListener("click", () => {
-            if (typeof window !== "undefined" && window.location) {
-                window.location.reload();
-            }
+    }
+
+    displayShips(board) {
+        board.ships.forEach(({ position }) => {
+            position.forEach(([x, y]) => {
+                const cell = this.boardContainer.querySelector(`div[data-x="${x}"][data-y="${y}"]`);
+                if (cell) cell.classList.add('ship-cell');
+            });
         });
     }
+
 }
